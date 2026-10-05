@@ -49,9 +49,6 @@ function App() {
 
   return (
     <div className="h-lvh flex flex-col justify-center items-center gap-4">
-      <p className="max-w-sm text-center">
-        Your location will be collected and saved before you continue to Facebook.
-      </p>
 
       {status !== 'error' && (
         <button
